@@ -6,15 +6,22 @@
     <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../jquery.slider.js"></script>
     <style type="text/css">
+      body {
+        font-family: arial, helvetica;
+      }
       #slider {
         width: 50%;
         margin: 0 auto;
         background-color: whitesmoke;
       }
+      #nav {
+        text-align: center;
+        border-bottom: solid 1px lightgray;
+      }
     </style>
   </head>
-  <body style="font-family:arial, helvetica">
-    <div style="text-align: center; border-bottom: solid 1px lightgray">
+  <body>
+    <div id="nav">
       <input type="button" value="slide 1" onclick="$('#slider').slide(0)">
       <input type="button" value="slide 2" onclick="$('#slider').slide(1)">
       <input type="button" value="slide 3" onclick="$('#slider').slide(2)">
