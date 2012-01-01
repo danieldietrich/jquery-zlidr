@@ -1,6 +1,8 @@
 /*
  *  Example:
  *
+ *  <script type='text/javascript' src='js/jquery.slider.js'></script>
+ *
  *  <style type="text/css">
  *    #slider {
  *      width: 50%;
@@ -37,21 +39,21 @@
       var li_width = obj.width()
       var ul_width = li_width * li.length
 
-      obj.css('overflow', 'hidden')
+      obj.css("overflow", "hidden")
 
       ul.css({
-        'width': ul_width,
-        'margin': 0,
-        'padding': 0,
-        'list-style': 'none',
+        "width": ul_width,
+        "margin": 0,
+        "padding": 0,
+        "list-style": "none",
       })
 
       li.css({
-        'width': li_width,
-        'float': 'left',
-        'margin': 0,
-        'padding': 0,
-        'overflow': 'hidden'
+        "width": li_width,
+        "float": "left",
+        "margin": 0,
+        "padding": 0,
+        "overflow": "hidden"
       })
 
     })
