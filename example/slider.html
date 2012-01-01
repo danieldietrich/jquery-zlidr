@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type='text/javascript' src='js/jquery-1.7.1.min.js'></script>
+    <script type='text/javascript' src='../jquery.slider.js'></script>
+    <style type="text/css">
+      #slider {
+        width: 50%;
+        margin: 0 auto;
+        background-color: whitesmoke;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='slider'>
+      <ul>
+        <li>
+          slide 1
+          <a href="javascript:void(0)" onclick="$(this).slideNext()">next</a>
+        </li>
+        <li>
+          slide 2
+          <a href="javascript:void(0)" onclick="$(this).slideBack()">back</a>
+          <a href="javascript:void(0)" onclick="$(this).slideNext()">next</a>
+        </li>
+        <li>
+          slide 3
+          <a href="javascript:void(0)" onclick="$(this).slideBack()">back</a>
+        </li>
+      </ul>
+    </div>
+    <script type='text/javascript'>
+      $(document).ready(function() {
+        $("#slider").slider()
+      })
+    </script>
+  </body>
+</html>
