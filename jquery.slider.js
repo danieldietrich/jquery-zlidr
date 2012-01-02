@@ -79,7 +79,7 @@
       var ul = $("ul", obj)
       var li = ul.children()
       var width = obj.width()
-      obj.attr("slide", -1)
+      obj.attr("slide", 0)
       obj.css("overflow", "hidden")
       ul.css({
         "width": width * li.length,

@@ -55,7 +55,7 @@
           } else {
             var tokens = hash.split(";")
             if (tokens[0] == "jquery-slider") {
-              $("#"+tokens[1]).slide(tokens[2])
+              $("#"+tokens[1]).slide(tokens[2], false)
             }
           }
         }, { unescape: ";" })
