@@ -14,8 +14,8 @@
  *  
  *  <div id="slider">
  *    <ul>
- *      <li><a href="javascript:void(0)" onclick="$('this').slideNext()">next</a></li>
- *      <li><a href="javascript:void(0)" onclick="$('this').slideBack()">back</a></li>
+ *      <li><a href="javascript:void(0)" onclick="$('#slider').slideNext()">next</a></li>
+ *      <li><a href="javascript:void(0)" onclick="$('#slider').slideBack()">back</a></li>
  *    </ul>
  *  </div>
  *
@@ -29,7 +29,6 @@
   // called to init a slider container (e.g. div)
   $.fn.slider = function() {
     var that = this
-    that.attr("slide", 0)
     $(window).resize(function(e) {
       internal_resize(that)
     })
@@ -40,14 +39,18 @@
   // slide back
   $.fn.slideBack = function() {
     return this.each(function() {
-      internal_slide(this, -1)
+      var obj = $(this)
+      var index = obj.attr("slide")
+      internal_slide(obj, index-1)
     })
   }
 
   // next slide
   $.fn.slideNext = function() {
     return this.each(function() {
-      internal_slide(this, 1)
+      var obj = $(this)
+      var index = obj.attr("slide")
+      internal_slide(obj, Number(index)+1)
     })
   }
 
@@ -55,13 +58,17 @@
   $.fn.slide = function(index) {
     return this.each(function() {
       var obj = $(this)
-      var margin = obj.width() * index * -1;
-      $("ul", obj).animate(
-        { "marginLeft": margin },
-        "fast"
-      )
-      obj.attr("slide", index)
+      internal_slide(obj, index)
     })
+  }
+
+  function internal_slide(obj, index) {
+    var margin = obj.width() * index * -1
+    $("ul", obj).animate(
+      { "marginLeft": margin },
+      "fast"
+    )
+    obj.attr("slide", index)
   }
 
   // set mandatory css attributes
@@ -71,6 +78,7 @@
       var ul = $("ul", obj)
       var li = ul.children()
       var width = obj.width()
+      obj.attr("slide", 0)
       obj.css("overflow", "hidden")
       ul.css({
         "width": width * li.length,
@@ -90,35 +98,17 @@
 
   // recalculate width (important case: scrollbar visibility changes)
   function internal_resize(that) {
-    var index = that.attr("slide")
     return that.each(function() {
       var obj = $(this)
       var ul = $("ul", obj)
       var li = ul.children()
       var width = obj.width()
+      var index = obj.attr("slide")
       ul.css({
         "width": width * li.length,
         "marginLeft": index * width * -1
       })
       li.css("width", width)
-    })
-  }
-
-  // slide next / back
-  function internal_slide(element, dir) {
-    return $(element).closest("li").each(function() {
-      var li = $(this)
-      var ul = li.parent()
-      var index = ul.children().index(li)
-      if ((dir == -1 && index == 0) || (dir == 1 && index == ul.children().length-1)) {
-        return
-      }
-      var margin = (index+dir) * li.width() * -1
-      ul.animate(
-        { "marginLeft": margin },
-        "fast"
-      )
-      obj.attr("slide", index+dir)
     })
   }
 
