@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>jquery.slider.js</title>
-    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../3rd/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../3rd/jquery.history.js"></script>
     <script type="text/javascript" src="../jquery.slider.js"></script>
     <style type="text/css">
       body {
@@ -46,8 +47,18 @@
     <div id="label">
     </div>
     <script type="text/javascript">
+      $("#slider").slider()
       $(document).ready(function() {
-        $("#slider").slider()
+        $.history.init(function(hash) {
+          if(hash == "") {
+            $("#slider").slide(0)
+          } else {
+            var tokens = hash.split(";")
+            if (tokens[0] == "jquery-slider") {
+              $("#"+tokens[1]).slide(tokens[2])
+            }
+          }
+        }, { unescape: ";" })
       })
     </script>
   </body>

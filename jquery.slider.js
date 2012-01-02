@@ -69,6 +69,7 @@
       "fast"
     )
     obj.attr("slide", index)
+    $.history.load("jquery-slider;"+obj.attr("id")+";"+index)
   }
 
   // set mandatory css attributes
@@ -78,7 +79,7 @@
       var ul = $("ul", obj)
       var li = ul.children()
       var width = obj.width()
-      obj.attr("slide", 0)
+      obj.attr("slide", -1)
       obj.css("overflow", "hidden")
       ul.css({
         "width": width * li.length,
