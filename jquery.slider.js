@@ -24,6 +24,18 @@
  *  </script>
  */
 
+function sliderHistoryHandler(id, index) {
+  return $("#"+id).each(function() {
+    var obj = $(this)
+    var margin = obj.width() * index * -1
+    $("ul", obj).animate(
+      { "marginLeft": margin },
+      "fast"
+    )
+    obj.attr("slide", index)
+  })
+}
+
 (function($) {
 
   // called to init a slider container (e.g. div)
@@ -40,17 +52,18 @@
   $.fn.slideBack = function() {
     return this.each(function() {
       var obj = $(this)
-      var index = obj.attr("slide")
-      internal_slide(obj, index-1)
+      var index = obj.attr("slide")-1
+      $.history.load(hash(obj,index))
     })
+    return 
   }
 
   // next slide
   $.fn.slideNext = function() {
     return this.each(function() {
       var obj = $(this)
-      var index = obj.attr("slide")
-      internal_slide(obj, Number(index)+1)
+      var index = Number(obj.attr("slide"))+1
+      $.history.load(hash(obj,index))
     })
   }
 
@@ -58,18 +71,12 @@
   $.fn.slide = function(index) {
     return this.each(function() {
       var obj = $(this)
-      internal_slide(obj, index)
+      $.history.load(hash(obj,index))
     })
   }
 
-  function internal_slide(obj, index) {
-    var margin = obj.width() * index * -1
-    $("ul", obj).animate(
-      { "marginLeft": margin },
-      "fast"
-    )
-    obj.attr("slide", index)
-    $.history.load("jquery-slider;"+obj.attr("id")+";"+index)
+  function hash(obj, index) {
+    return "jquery-slider;"+obj.attr("id")+";"+index
   }
 
   // set mandatory css attributes

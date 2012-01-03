@@ -51,11 +51,13 @@
       $(document).ready(function() {
         $.history.init(function(hash) {
           if(hash == "") {
-            $("#slider").slide(0)
+            sliderHistoryHandler("slider", 0)
           } else {
             var tokens = hash.split(";")
             if (tokens[0] == "jquery-slider") {
-              $("#"+tokens[1]).slide(tokens[2], false)
+              var id = tokens[1]
+              var index = tokens[2]
+              sliderHistoryHandler(id, index)
             }
           }
         }, { unescape: ";" })
