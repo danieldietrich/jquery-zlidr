@@ -47,8 +47,8 @@
     <div id="label">
     </div>
     <script type="text/javascript">
-      $("#slider").slider()
       $(document).ready(function() {
+        $("#slider").slider()
         $.history.init(function(hash) {
           if(hash == "") {
             sliderHistoryHandler("slider", 0)
