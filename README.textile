@@ -1,1 +1,1 @@
-A jquery slider plugin.
+zlidr, a jquery slider plugin.

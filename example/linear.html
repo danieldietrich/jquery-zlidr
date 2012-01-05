@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jquery-zlidr | linear demo</title>
+    <style>
+      body {
+        font-family: arial, helvetica;
+      }
+      #content {
+        width: 50%;
+        margin: 0 auto;
+        background-color: whitesmoke;
+      }
+    </style>
+  </head>
+  <body style="text-align: center">
+    <div style="text-align: center">
+      <input type="button" value="slide 1" onclick="$.history.load('/demo/slide1')">
+      <input type="button" value="slide 2" onclick="$.history.load('/demo/slide2')">
+      <input type="button" value="slide 3" onclick="$.history.load('/demo/slide3')">
+    </div>
+    <div id="content">
+      <ul>
+        <li>
+          <h1>slide 1</h1>
+          <a href="/demo/slide2">next</a>
+        </li>
+        <li>
+          <h1>slide 2</h1>
+          <a href="/demo/slide1">back</a>
+          <a href="/demo/slide3">next</a>
+        </li>
+        <li>
+          <h1>slide 3</h1>
+          <a href="/demo/slide2">back</a>
+        </li>
+      </ul>
+    </div>
+    <div id="url"></div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="../js/jquery.history.js"></script>
+    <script src="../js/jquery.zlidr.js"></script>
+    <script>
+      var handler = {
+        init: function() {
+          $("#content").zlidr("go", 0)
+          $("#url").text("Initial page")
+        },
+        load: function(url) {
+          $("#content").zlidr("go", Number(url[11])-1)
+          $("#url").text("Page: " + url)
+        }
+      }
+      $(document).ready(function() {
+        $.history.init(handler)
+        $.zlidr.init("#content")
+      })
+    </script>
+  </body>
+</html>
