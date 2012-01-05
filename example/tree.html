@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jquery-zlidr | tree example</title>
+    <style>
+      body {
+        font-family: arial, helvetica;
+      }
+      #wrapper {
+        width: 50%;
+        margin: 0 auto;
+      }
+      #content {
+        min-height: 100px;
+        font-size: small;
+        background-color: whitesmoke;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="path"></div>
+      <div id="content"></div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="../js/jquery.history.js"></script>
+    <script src="../js/jquery.zlidr.js"></script>
+    <script>
+      $(document).ready(function() {
+        $.history.init(handler)
+        $("#content").zlidr("init")
+      })
+      var currentUrl,
+          handler = {
+        init: function() {
+          handler.load("/myComputer")
+        },
+        load: function(url) {
+          var dir = (currentUrl == undefined) ? 0 : (url.indexOf(currentUrl) == 0) ? 1 : -1
+          currentUrl = url
+          $("#path").html(getPath(url))
+          $("#content").zlidr("replace", dir, function(el){
+            if (isCached(url)) {
+              el.html(getContent(url))
+            } else {
+              el.html("Loading...")  
+              setTimeout(function(){el.html(getContent(url))}, 1000)
+            }
+          })
+        }
+      }
+      function getPath(url) {
+          var html = "", href = "", path = url.substr(1).split("/")
+          for (var i = 0, len = path.length, part; part = path[i], i < len; i++) {
+            href += "/" + part
+            if (i == len-1) {
+              html += "/ "+part+" "
+            } else {
+              html += "/ <a href=\""+href+"\">"+part+"</a> "
+            }
+          }
+          return html
+      }
+      function getContent(url) {
+        var result = "",
+            data = preload[url],
+            isContent = data.elements.length > 0 && data.elements[0].type == "content"
+        if (isContent) {
+          result += "<pre>" + data.elements[0].content.join("\n") + "</pre>"
+        } else {
+          if (url.substr(1).split("/").length > 1) {
+            result += "<a href='" + url.substr(0, url.lastIndexOf("/")) + "'>..</a><br>"
+          }
+          for (i in data.elements) {
+            var el = data.elements[i]
+            result += "<a href='" + url + "/" + el.name + "'>" + el.name + "</a><br>"
+          }
+        }
+        return result
+      }
+      function isCached(url) {
+        var data = preload[url]
+        if (data.cached) {
+          return true
+        } else {
+          data.cached = true
+          return false
+        }
+      }
+      var preload = {
+        "/myComputer": {
+          cached: false,
+          elements: [
+            {type: "dir", name: "Applications"},
+            {type: "dir", name: "Users"}
+          ]
+        },
+        "/myComputer/Applications": {
+          cached: false,
+          elements: [
+            {type: "dir", name: "Empty"}
+          ]
+        },
+        "/myComputer/Applications/Empty": {
+          cached: false,
+          elements: []
+        },
+        "/myComputer/Users": {
+          cached: false,
+          elements: [
+            {type: "dir", name: "daniel"}
+          ]
+        },
+        "/myComputer/Users/daniel": {
+          cached: false,
+          elements: [
+            {type: "file", name: ".profile"}
+          ]
+        },
+        "/myComputer/Users/daniel/.profile": {
+          cached: false,
+          elements: [
+            {type: "content", content: [
+              "",
+              "##",
+              "# DELUXE-USR-LOCAL-BIN-INSERT",
+              "# (do not remove this comment)",
+              "##",
+              "echo $PATH | grep -q -s \"/usr/local/bin\"",
+              "if [ $? -eq 1 ] ; then",
+              "    PATH=$PATH:/usr/local/bin",
+              "    export PATH",
+              "fi"
+            ]}
+          ]
+        }
+      }
+    </script>
+  </body>
+</html>
