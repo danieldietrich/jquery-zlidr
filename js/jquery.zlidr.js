@@ -2,13 +2,18 @@
  * author: daniel dietrich
  */
 (function($){
+  $.fn.zlidr = function(method) {
+    return _[method].apply(this, Array.prototype.slice.call(arguments, 1))
+  }
   var _ = $.zlidr = {
-    init: function(id) {
-      var obj = $(id)
-      style(obj)
-      resize(obj)
-      $(window).resize(function(e) {
+    init: function() {
+      return this.each(function() {
+        var obj = $(this)
+        style(obj)
         resize(obj)
+        $(window).resize(function(e) {
+          resize(obj)
+        })
       })
     },
     go: function(index) {
@@ -22,9 +27,6 @@
         obj.attr("index", index)
       })
     }
-  }
-  $.fn.zlidr = function(method) {
-    return _[method].apply(this, Array.prototype.slice.call(arguments, 1))
   }
   function style(obj) {
     var ul = $("ul", obj),
