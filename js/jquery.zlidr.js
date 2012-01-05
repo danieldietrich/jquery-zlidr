@@ -24,7 +24,7 @@
     }
   }
   $.fn.zlidr = function(method) {
-   return _[method].apply(this, Array.prototype.slice.call(arguments, 1))
+    return _[method].apply(this, Array.prototype.slice.call(arguments, 1))
   }
   function style(obj) {
     var ul = $("ul", obj),
@@ -41,14 +41,14 @@
     })
   }
   function resize(obj) {
-      var ul = $("ul", obj),
-          li = ul.children(),
-          width = obj.width(),
-          index = obj.attr("index") || 0
-      ul.css({
-        "width": width * li.length,
-        "marginLeft": index * width * -1
-      })
-      li.css("width", width)
+    var ul = $("ul", obj),
+        li = ul.children(),
+        width = obj.width(),
+        index = obj.attr("index") || 0
+    ul.css({
+      "width": width * li.length,
+      "marginLeft": index * width * -1
+    })
+    li.css("width", width)
   }
 })(jQuery)
