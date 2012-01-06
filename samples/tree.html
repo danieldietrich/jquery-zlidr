@@ -11,9 +11,12 @@
         width: 50%;
         margin: 0 auto;
       }
+      #path {
+        font-weight: bold;
+        padding: 1em 0;
+      }
       #content {
         min-height: 100px;
-        font-size: small;
         background-color: whitesmoke;
       }
     </style>
@@ -28,14 +31,17 @@
     <script src="../js/jquery.zlidr.js"></script>
     <script>
       $(document).ready(function() {
-        $.history.init(handler)
         $("#content").zlidr("init")
+        $("body").on("click", "a[href^=/]", function(e) {
+          e.preventDefault()
+          $.history.load($(this).attr("href"))
+        })
+        $.history.init(handler)
+        $.history.replace("/myComputer")
       })
       var currentUrl,
           handler = {
-        init: function() {
-          handler.load("/myComputer")
-        },
+        init: function() {},
         load: function(url) {
           var dir = (currentUrl == undefined) ? 0 : (url.indexOf(currentUrl) == 0) ? 1 : -1
           currentUrl = url

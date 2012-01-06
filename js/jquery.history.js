@@ -2,22 +2,20 @@
  * author: daniel dietrich
  */
 (function($){
-  var handler,
-      _ = $.history = {
-    init: function(h) {
-      handler = h
-      $("body").delegate("a[href^=/]", "click", function(e) {
-        e.preventDefault()
-        _.load($(this).attr("href"))
-      })
+  var _ = $.history = {
+    init: function(handler) {
       var initialURL = location.href
       $(window).bind("popstate", function(e) {
-        (location.href == initialURL) ? handler.init() : handler.load(e.originalEvent.state.url)
+        (initialURL == location.href) ? handler.init() : handler.load(e.originalEvent.state.url)
       })
     },
     load: function(url) {
       var ok = handler.load(url)
       if (ok == undefined || ok) history.pushState({url: url}, null, url)
+    },
+    replace: function(url) {
+      var ok = handler.load(url)
+      if (ok == undefined || ok) history.replaceState({url: url}, null, url)
     }
   }
 })(jQuery)

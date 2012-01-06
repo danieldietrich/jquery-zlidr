@@ -43,18 +43,20 @@
     <script src="../js/jquery.zlidr.js"></script>
     <script>
       var handler = {
-        init: function() {
-          $("#content").zlidr("go", 0)
-          $("#url").text("Initial page")
-        },
+        init: function() {},
         load: function(url) {
           $("#content").zlidr("go", Number(url[11])-1)
           $("#url").text("Page: " + url)
         }
       }
       $(document).ready(function() {
-        $.history.init(handler)
         $("#content").zlidr("init")
+        $("body").on("click", "a[href^=/]", function(e) {
+          e.preventDefault()
+          $.history.load($(this).attr("href"))
+        })
+        $.history.init(handler)
+        $.history.replace("/demo/slide1")
       })
     </script>
   </body>
